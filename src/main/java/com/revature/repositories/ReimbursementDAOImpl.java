@@ -64,7 +64,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			PreparedStatement stm = conn.prepareStatement(sql);
 					
 			stm.setDouble(1, r.getAmount());
-			stm.setTimestamp(2, Timestamp.valueOf() (r.getResolved()));
+			stm.setTimestamp(2, r.getResolved());
 			stm.setString(3, r.getDescription());
 			stm.setBytes(4, r.getReceipt());
 			stm.setInt(5,r.getAuthor());
@@ -88,7 +88,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	public boolean update(Reimbursement r) {
 		int id = r.getId();
 		double amount = r.getAmount();
-		Timestamp resolved = Timestamp.valueOf(r.getResolved());
+		Timestamp resolved = r.getResolved();
 		String description = r.getDescription();
 		byte[] receipt = r.getReceipt();
 		int author = r.getAuthor();
@@ -127,6 +127,12 @@ try (Connection conn = ConnectionUtil.getConnection()) {
 
 	@Override
 	public boolean delete(Reimbursement r) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean getById(Reimbursement r) {
 		
 		return false;
 	}
