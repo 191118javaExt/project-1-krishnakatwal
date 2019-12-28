@@ -110,8 +110,76 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
+	public User getByemailAndPassword(String email, String password) {
+		User user = null;
+
+		try (Connection con = ConnectionUtil.getConnection()) {
+
+			String sql = "SELECT * FROM project1.user WHERE email = ? AND password = ?;";
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String username = rs.getString("username");
+				String Password = rs.getString("password");
+				String firstname = rs.getString("firstname");
+				String lastname = rs.getString("lastname");
+				String Email = rs.getString("Email");
+				int role_id = rs.getInt("role_id");
+				user = new User(id, username, Password, firstname, lastname, Email, role_id);
+
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			logger.warn("Unable to retrieve the user by using first name and password", e);
+		}
+		return user;
+	}
+
+	@Override
+	public User getById(int id) {
+		User user = null;
+
+		try (Connection con = ConnectionUtil.getConnection()) {
+
+			String sql = "SELECT * FROM project1.user WHERE id = ? ;";
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int user_id = rs.getInt("id");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String fname = rs.getString("firstname");
+				String lname = rs.getString("lastname");
+				String email = rs.getString("email");
+				int role_id = rs.getInt("role_id");
+
+				user = new User(user_id, username, password, fname, lname, email, role_id);
+
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			logger.warn("Unable to retrieve the user", e);
+		}
+
+		return user;
+	}
+
+	@Override
 	public boolean delete(User u) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 

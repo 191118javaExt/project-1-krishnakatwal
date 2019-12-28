@@ -19,7 +19,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	private static Logger logger = Logger.getLogger(ReimbursementDAOImpl.class);
 
 	@Override
-	public List<Reimbursement> getReimbursement() {
+	public List<Reimbursement> getAllReimbursement() {
 		List<Reimbursement> list = new ArrayList<>();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -132,7 +132,7 @@ try (Connection conn = ConnectionUtil.getConnection()) {
 	}
 
 	@Override
-	public boolean getById(Reimbursement r) {
+	public boolean getById(int id) {
 		
 		return false;
 	}

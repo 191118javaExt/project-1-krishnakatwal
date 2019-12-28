@@ -6,7 +6,7 @@ import com.revature.models.Reimbursement;
 
 public interface ReimbursementDAO {
 
-	List<Reimbursement> getReimbursement();
+	public List<Reimbursement> getAllReimbursement();
 
 	boolean add(Reimbursement r);
 
@@ -14,5 +14,5 @@ public interface ReimbursementDAO {
 
 	boolean delete(Reimbursement r);
 	
-	boolean getById(Reimbursement r);
+	boolean getById(int  id);
 }
