@@ -7,28 +7,28 @@ import com.revature.repositories.UserDAO;
 import com.revature.repositories.UserDAOImpl;
 
 public class UserService {
-	UserDAO repository = new UserDAOImpl();
+	static UserDAO repository = new UserDAOImpl();
 
-	public List<User> getAllUser() {
-		return repository.getUser();
+	public static List<User> getAllUser() {
+		return  new UserDAOImpl().getAllUser();
 
 	}
 
 	public boolean add(User u) {
-		return repository.add(u);
+		return new UserDAOImpl().add(u);
 	}
 
 	public boolean update(User u) {
-		return repository.update(u);
+		return new UserDAOImpl().update(u);
 	}
 
-	public User getByFnameAndPassword(String email, String password) {
+	public static User EmailAndPassword(String email, String password) {
 
-		return repository.getByemailAndPassword(email, password);
+		return new  UserDAOImpl().getByemailAndPassword(email, password);
 	}
 
 	public User getById(int id) {
 
-		return repository.getById(id);
+		return new UserDAOImpl().getById(id);
 	}
 }

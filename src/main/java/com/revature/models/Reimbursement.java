@@ -15,7 +15,7 @@ public class Reimbursement {
 	private int type_id;
 
 	public Reimbursement() {
-		super();
+		super();					
 
 	}
 

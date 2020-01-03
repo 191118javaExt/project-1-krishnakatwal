@@ -17,12 +17,12 @@ public class UserDAOImpl implements UserDAO {
 	private static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
 	@Override
-	public List<User> getUser() {
+	public List<User> getAllUser() {
 		List<User> list = new ArrayList<>();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "SELECT * FROM project1.user  WHERE id = ?;";
+			String sql = "SELECT * FROM project1.users  WHERE id = ?;";
 
 			Statement stmt = conn.createStatement();
 
@@ -54,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean add(User u) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "INSERT INTO  project1.user (username,password,firstname, lastname,email,role_id) "
+			String sql = "INSERT INTO  project1.users (username,password,firstname, lastname,email,role_id) "
 					+ "VALUES (?, ?, ?, ?, ?,?);";
 
 			PreparedStatement stm = conn.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class UserDAOImpl implements UserDAO {
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "UPDATE project1.user SET username = ?, password = ?,firstname = ?,lastname = ?,email = ?, role_id = ? WHERE id = ?;";
+			String sql = "UPDATE project1.users SET username = ?, password = ?,firstname = ?,lastname = ?,email = ?, role_id = ? WHERE id = ?;";
 
 			PreparedStatement stm = conn.prepareStatement(sql);
 			stm.setString(1, firstname);
@@ -115,7 +115,7 @@ public class UserDAOImpl implements UserDAO {
 
 		try (Connection con = ConnectionUtil.getConnection()) {
 
-			String sql = "SELECT * FROM project1.user WHERE email = ? AND password = ?;";
+			String sql = "SELECT * FROM project1.users WHERE email = ? AND password = ?;";
 
 			PreparedStatement stmt = con.prepareStatement(sql);
 
@@ -149,7 +149,7 @@ public class UserDAOImpl implements UserDAO {
 
 		try (Connection con = ConnectionUtil.getConnection()) {
 
-			String sql = "SELECT * FROM project1.user WHERE id = ? ;";
+			String sql = "SELECT * FROM project1.users WHERE id = ? ;";
 
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -182,5 +182,6 @@ public class UserDAOImpl implements UserDAO {
 
 		return false;
 	}
+
 
 }

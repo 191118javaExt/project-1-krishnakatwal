@@ -9,26 +9,26 @@ import com.revature.repositories.ReimbursementDAOImpl;
 public class ReimbursementService {
 	ReimbursementDAO repository = new ReimbursementDAOImpl();
 
-	public List<Reimbursement> getAllReimbursement() {
-		return repository.getAllReimbursement();
+	public static List<Reimbursement> getAllReimbursement() {
+		return new ReimbursementDAOImpl().getAllReimbursement();
 
 	}
 
 	public boolean add(Reimbursement r) {
-		return repository.add(r);
+		return new ReimbursementDAOImpl().add(r);
 
 	}
 
 	public boolean update(Reimbursement r) {
-		return repository.update(r);
+		return new ReimbursementDAOImpl().update(r);
 	}
 
 	public boolean getById(int id) {
-		return repository.getById(id);
+		return new ReimbursementDAOImpl().getById(id);
 
 	}
 
 	public boolean updater(Reimbursement r) {
-		return repository.update(r);
+		return new ReimbursementDAOImpl().update(r);
 	}
 }
