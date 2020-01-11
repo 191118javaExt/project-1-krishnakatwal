@@ -3,6 +3,7 @@ package com.revature.services;
 import java.util.List;
 
 import com.revature.models.User;
+import com.revature.models.UserDTO;
 import com.revature.repositories.UserDAO;
 import com.revature.repositories.UserDAOImpl;
 
@@ -30,5 +31,16 @@ public class UserService {
 	public User getById(int id) {
 
 		return new UserDAOImpl().getById(id);
+	}
+
+	public static UserDTO convertToDto(User u) {
+		return new UserDTO(u.getId(),
+				u.getFirstname(),
+				u.getLastname(),
+				u.getUsername(),
+				u.getEmail(),
+				u.getPassword(),
+				u.getRole_id()
+				);
 	}
 }

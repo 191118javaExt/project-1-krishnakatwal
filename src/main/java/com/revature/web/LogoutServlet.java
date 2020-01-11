@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 public class LogoutServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(LogoutServlet.class);
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

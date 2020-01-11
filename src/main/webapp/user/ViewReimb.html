@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form name ="ExpenseReimbursementForm">
+<div class="container">
+  
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>REIMBURSEMENT Id</th>
+          <th>TYPE</th>
+           <th>STATUS</th>
+           <th>AMOUNT</th>
+          <th>Description</th>
+          <th>RECEIPT</th>
+          <th>SUBMITTED TIME</th>
+          <th>RESOVED ID</th>
+          <th>RESOVER TIME</th>
+          
+        </tr>
+      </thead>
+       </table>
+  </div>
+</div>
+</form>
+
+</body>
+
+<script>
+		function ViewReimb() {
+			let viewForm = document.EmpForm;  
+			let amount = viewForm.amount.value;
+			let resolver = viewForm.resolver.value;
+			let description = viewForm.description.value;
+			let receipt = viewForm.receipt.value;
+			let author = viewForm.authoe.value;
+			let resolved =viewForm.resolved.value;
+			let status_id = viewForm.status_id.value;
+		    let type_id = viewForm.type_id.value;
+			
+			
+			let viewFormobj = {
+				amount : amount;
+			    resolver : resolver;
+			    description : descripton;
+			    receipt : receipt;
+			    author : author;
+			    resolved : resolved;
+			    status_id : status_id;
+			    type_id : type_id;
+			}
+			console.log(viewFormobj)
+			
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if ((this.readyState === 4) && (this.status === 201)) {
+					sessionStorage.setItem('currentuser', this.responseText);
+					window.location = "http://localhost:8080/project-1/user/viewReimb.html";
+				}
+				if (this.readyState === 4 && this.status != 201) {
+					alert("Failed to view");
+				}
+			};
+			xhr.open("POST","http://localhost:8080/project-1/ViewReimb");
+			xhr.send((JSON.stringify(viewFormobj));
+		}
+	</script>
+	</html>

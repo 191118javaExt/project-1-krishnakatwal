@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FinanceManager Home Page</title>
+    <script src="../scripts/fm.js"></script>
+    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+<body>
+ <div class="jumbotron">
+    	<h2 id="welcome">Welcome</h2>
+    </div>
+    
+ <div class=.container-fluid>
+ <form>
+<button type="button" class="btn btn-primary btn-lg btn-block">Approve/Deny Reimbursement</button>
+</form>
+
+<form>
+<button type="button" class="btn btn-secondary btn-lg btn-block">View All Reimbursements</button>
+</form>
+</div>
+</body>
+
+<script>
+  	function logout() {
+  		let xhr = new XMLHttpRequest();
+  		xhr.open("POST", "http://localhost:8080/project-1/logout");
+  		xhr.send();
+  		
+  		sessionStorage.removeItem('currentUser');
+		window.location = "http://localhost:8080/project-1/Fmanager/home.html";
+  	}
+  </script>
+  <script>
+  approved and denied and view all reimbursement..
+  </script>
+  
+</html>

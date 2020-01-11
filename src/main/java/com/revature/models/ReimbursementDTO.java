@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-public class Reimbursement implements Serializable {
+public class ReimbursementDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2599858684487092879L;
+	
 	private int id;
 	private double amount;
 	private int resolver;
@@ -16,13 +17,15 @@ public class Reimbursement implements Serializable {
 	private Timestamp resolved;
 	private int status_id;
 	private int type_id;
-
-	public Reimbursement() {
-		super();					
-
+	
+	
+	public ReimbursementDTO() {
+		super();
+		
 	}
 
-	public Reimbursement(int id, double amount, int resolver, String description, byte[] receipt, int author,
+
+	public ReimbursementDTO(int id, double amount, int resolver, String description, byte[] receipt, int author,
 			Timestamp resolved, int status_id, int type_id) {
 		super();
 		this.id = id;
@@ -35,100 +38,102 @@ public class Reimbursement implements Serializable {
 		this.status_id = status_id;
 		this.type_id = type_id;
 	}
-	
-	
 
-	public Reimbursement(double amount, String description, int author, int type) {
-		super();
-		this.amount = amount;
-		this.description = description;
-		this.author = author;
-		this.type_id = type;
-	}
-	
-	
 
-	public Reimbursement(double amount, int resolver, String description, int author, int status_id, int type_id) {
-		super();
-		this.amount = amount;
-		this.resolver = resolver;
-		this.description = description;
-		this.author = author;
-		this.status_id = status_id;
-		this.type_id = type_id;
-	}
-
-	public int getId() {
+	public final int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+
+	public final void setId(int id) {
 		this.id = id;
 	}
 
-	public double getAmount() {
+
+	public final double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+
+	public final void setAmount(double amount) {
 		this.amount = amount;
 	}
 
-	public int getResolver() {
+
+	public final int getResolver() {
 		return resolver;
 	}
 
-	public void setResolver(int resolver) {
+
+	public final void setResolver(int resolver) {
 		this.resolver = resolver;
 	}
 
-	public String getDescription() {
+
+	public final String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+
+	public final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public byte[] getReceipt() {
+
+	public final byte[] getReceipt() {
 		return receipt;
 	}
 
-	public void setReceipt(byte[] receipt) {
+
+	public final void setReceipt(byte[] receipt) {
 		this.receipt = receipt;
 	}
 
-	public int getAuthor() {
+
+	public final int getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(int author) {
+
+	public final void setAuthor(int author) {
 		this.author = author;
 	}
 
-	public Timestamp getResolved() {
+
+	public final Timestamp getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(Timestamp resolved) {
+
+	public final void setResolved(Timestamp resolved) {
 		this.resolved = resolved;
 	}
 
-	public int getStatus_id() {
+
+	public final int getStatus_id() {
 		return status_id;
 	}
 
-	public void setStatus_id(int status_id) {
+
+	public final void setStatus_id(int status_id) {
 		this.status_id = status_id;
 	}
 
-	public int getType_id() {
+
+	public final int getType_id() {
 		return type_id;
 	}
 
-	public void setType_id(int type_id) {
+
+	public final void setType_id(int type_id) {
 		this.type_id = type_id;
 	}
+
+
+	public static final long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -148,6 +153,7 @@ public class Reimbursement implements Serializable {
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -156,7 +162,7 @@ public class Reimbursement implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Reimbursement other = (Reimbursement) obj;
+		ReimbursementDTO other = (ReimbursementDTO) obj;
 		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
 			return false;
 		if (author != other.author)
@@ -184,11 +190,15 @@ public class Reimbursement implements Serializable {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Reimbursement [id=" + id + ", amount=" + amount + ", resolver=" + resolver + ", description="
+		return "ReimbursementDTO [id=" + id + ", amount=" + amount + ", resolver=" + resolver + ", description="
 				+ description + ", receipt=" + Arrays.toString(receipt) + ", author=" + author + ", resolved="
 				+ resolved + ", status_id=" + status_id + ", type_id=" + type_id + "]";
 	}
+	
+	
+	
 
 }

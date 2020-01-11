@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <style>
+ body {
+  background-color: lightblue;
+}
+ </style>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title>New User Registration</title>
+</head>
+<body>
+<form name = "newuserForm" >
+  <div class="form-group">
+    <label for="formGroupExampleInput">First name</label>
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Last name</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Email</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input" required>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Password</label>
+    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input" required>
+  </div>
+</form>
+
+<div class="fluid-container">
+  <form action="/action_page.php">
+  <h2>Role</h2>
+    <div class="form-check-inline">
+      <label class="form-check-label" for="radio1">
+        <input type="radio" class="form-check-input" id="Employee" name="optradio" value="option1">Employee
+      </label>
+    </div>
+    <div class="form-check-inline">
+      <label class="form-check-label" for="radio2">
+        <input type="radio" class="form-check-input" id="Manager" name="optradio" value="option2">Manager
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</body>
+
+<script>
+		function NewRegister() {
+			let newuserForm = document.newuserForm;
+			let Firstname = newuserForm.Firstname.value;
+			let Lastname = newuserForm.Lastname.value;
+			let Email = newuserForm.Email.value;
+			let Password = newuserForm.Password.value;
+			let Role= newuserForm.Role.value;
+			
+			let newuserobj = {
+				Firstname : Firstname,
+				Lastname : Lastname,
+				Email : Email,
+				Password : Password,
+				Role: Role,
+			}
+			console.log(newuserobj)
+			
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if ((this.readyState === 4) && (this.status === 201)) {
+					sessionStorage.setItem('newuser', this.responseText);
+					alert("Succesfully submitted Registration Form")
+					window.location = "http://localhost:8080/project-1/HTML/Project-1-Login.html";
+				}
+				if (this.readyState === 4 && this.status != 201) {
+					alert("Failed to Registred");
+				}
+			};
+			xhr.open("POST","http://localhost:8080/project-1/Register");
+			xhr.send();
+		}
+	</script>
+
+</html>

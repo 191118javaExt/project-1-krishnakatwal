@@ -1,5 +1,6 @@
 package com.revature.web;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.User;
+import com.revature.models.UserDTO;
 import com.revature.services.UserService;
 import com.revature.util.HtmlTemplate;
 
@@ -22,22 +25,41 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 		throws ServletException, IOException {
-		String email = req.getParameter("email");
-		String password = req.getParameter("password");
-		logger.info("User attempted to login with username " + email);
-		User e = UserService.EmailAndPassword(email, password);
-		if(e != null) {
+		
+		System.out.println("Inside log in servlet");
+		
+		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = req.getReader();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+		String body = sb.toString();
+		ObjectMapper om = new ObjectMapper();
+		User model = om.readValue(body, User.class);
+		
+		System.out.println("password = " + model.getPassword());
+		logger.info("User attempted to login with email," + model.getEmail());
+		User u = UserService.EmailAndPassword(model.getEmail(), model.getPassword());
+		System.out.println(u);
+		if(u != null) {
 			HttpSession session = req.getSession();
 			// Gets the current session, or creates one if it did not exist
-			session.setAttribute("username", email);
-			RequestDispatcher rd = req.getRequestDispatcher("user/home.HTML");
-			rd.forward(req, res);
-			logger.info(email + " has successfully logged in");
+		
+			//RequestDispatcher rd = req.getRequestDispatcher("user/home.HTML");
+			UserDTO udto = UserService.convertToDto(u);
+			PrintWriter out = res.getWriter();
+			res.setContentType("application/json");
+			
+			out.println(om.writeValueAsString(udto));
+			System.out.println("response of login attempt is user with = " + udto);
+			session.setAttribute("userName", udto);
+			logger.info(udto.getFirstname() + " has successfully logged in");
 		} else {
 			PrintWriter out = HtmlTemplate.getHtmlWriter(res);
-			logger.info(email + " has failed to login.");
-			out.println("<h3 style='color:red'>Denied.</h3>");
-			out.println("<p>email or password is incorrect.</p>");
+			logger.info(model.getEmail() + " has failed to login.");
+			res.setStatus(204);
+			
 		}
 	}
 }
