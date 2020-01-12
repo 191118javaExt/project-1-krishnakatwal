@@ -51,6 +51,34 @@
   	<url-pattern>/ViewReimb</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+  	<servlet-name>FmLoginServlet</servlet-name>
+  	<servlet-class>com.revature.web.FmLoginServlet</servlet-class>	
+  </servlet>
+  	
+  <servlet-mapping>
+  	<servlet-name>FmLoginServlet</servlet-name>
+  	<url-pattern>/FMlogin</url-pattern>
+  </servlet-mapping>
   
+   <servlet>
+  	<servlet-name>ViewReimbOfUserServlet</servlet-name>
+  	<servlet-class>com.revature.web.ViewReimbOfUserServlet</servlet-class>	
+  </servlet>
+  	
+  <servlet-mapping>
+  	<servlet-name>ViewReimbOfUserServlet</servlet-name>
+  	<url-pattern>/ViewReimbOfUser</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>ReimbursementServlet</servlet-name>
+  	<servlet-class>com.revature.web.ReimbursementServlet</servlet-class>	
+  </servlet>
+  	
+  <servlet-mapping>
+  	<servlet-name>ReimbursementServlet</servlet-name>
+  	<url-pattern>/Reimbursement</url-pattern>
+  </servlet-mapping>
   
 </web-app>

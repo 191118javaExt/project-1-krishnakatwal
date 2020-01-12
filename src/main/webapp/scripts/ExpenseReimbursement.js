@@ -26,7 +26,8 @@ function submitReimbursement(){
 	xhr.onreadystatechange = function() {
 		if(this.readyState === 4 && this.status === 200) {
 			alert("Reimbursement Successfull.")
-			window.location = "http://localhost:8080/project-1/user/CreateReimbursement.html";
+			sessionStorage.setItem("currentReimbursement", this.responseText);
+			window.location = "http://localhost:8080/project-1/user/ViewReimb.html";
 		}
 		
 		else if(this.readyState === 4 && this.status === 204){

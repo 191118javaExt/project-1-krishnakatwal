@@ -15,4 +15,7 @@ public interface ReimbursementDAO {
 	boolean delete(Reimbursement r);
 	
 	boolean getById(int  id);
+
+
+	List<Reimbursement> getAllReimByUserid(int id);
 }

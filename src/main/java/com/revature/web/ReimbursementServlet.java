@@ -23,6 +23,7 @@ public class ReimbursementServlet extends HttpServlet{
 		 res.setContentType("application/json");
 		 List<Reimbursement> all = ReimbursementService.getAllReimbursement();
 		 
+		 
 		 for(Reimbursement r : all) {
 			 r.getId();
 			 r.getAmount();

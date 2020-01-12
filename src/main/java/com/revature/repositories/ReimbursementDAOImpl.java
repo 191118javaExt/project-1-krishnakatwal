@@ -23,7 +23,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		List<Reimbursement> list = new ArrayList<>();
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM project1.reimburesement;";
+			String sql = "SELECT * FROM project1.reimbursement;";
 
 			Statement stmt = conn.createStatement();
 
@@ -88,31 +88,31 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	@Override
 	public boolean update(Reimbursement r) {
 		int id = r.getId();
-		double amount = r.getAmount();
-		Timestamp resolved = r.getResolved();
-		String description = r.getDescription();
-		byte[] receipt = r.getReceipt();
-		int author = r.getAuthor();
-		int resolverId = r.getResolver();
+		//double amount = r.getAmount();
+		//Timestamp resolved = r.getResolved();
+		//String description = r.getDescription();
+		//byte[] receipt = r.getReceipt();
+		//int author = r.getAuthor();
+		//int resolverId = r.getResolver();
 		int statusId = r.getStatus_id();
-		int typeId = r.getType_id();
+		//int typeId = r.getType_id();
 		
 try (Connection conn = ConnectionUtil.getConnection()) {
 			
 			
-			String sql = "UPDATE project1.reimbursements SET amount = ?,resolved = ?, description = ?, receipt = ?, author = ?, resolver = ?, status_id = ?, type_id = ? WHERE id = ?;"; 
+			String sql = "UPDATE project1.reimbursements SET status_id = ? WHERE id = ?;"; 
 					
 			
 			PreparedStatement stm = conn.prepareStatement(sql);
-			stm.setDouble(1, amount);
-			stm.setTimestamp(2, resolved);
-			stm.setString(3, description);
-			stm.setBytes(4, receipt);
-			stm.setInt(5, author);
-			stm.setInt(6, resolverId);
-			stm.setInt(7, statusId);
-			stm.setInt(8, typeId);
-			stm.setInt(9, id);
+			//stm.setDouble(1, amount);
+			//stm.setTimestamp(2, resolved);
+			//stm.setString(3, description);
+			//stm.setBytes(4, receipt);
+			//stm.setInt(5, author);
+			//stm.setInt(6, resolverId);
+			stm.setInt(1, statusId);
+			//stm.setInt(8, typeId);
+			stm.setInt(2, id);
 			
 			if(!stm.execute()) {
 				return false;
@@ -137,4 +137,39 @@ try (Connection conn = ConnectionUtil.getConnection()) {
 		
 		return false;
 	}
+	
+	@Override
+	public List<Reimbursement> getAllReimByUserid(int id) {
+		List<Reimbursement> list = new ArrayList<>();
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "SELECT * FROM project1.reimbursement WHERE author = "+ id+";";
+
+			Statement stmt = conn.createStatement();
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int id1 = rs.getInt("id");
+				double amount = rs.getDouble("amount");
+				int resolver = rs.getInt("resolver");
+				String description = rs.getString("description");
+				byte[] receipt = rs.getBytes("receipt");
+				int author= rs.getInt("author");
+				Timestamp resolved = rs.getTimestamp("resolved");
+				int status_id = rs.getInt("status_id");
+				int type_id = rs.getInt("type_id");
+
+				Reimbursement reimb = new Reimbursement(amount, description, author, type_id);
+				list.add(reimb);
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			logger.warn("Unable to retrieve reimbursments", e);
+		}
+
+		return list;
+	}
+	
 }

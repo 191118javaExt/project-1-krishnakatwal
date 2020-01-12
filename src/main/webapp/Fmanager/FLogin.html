@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+
+
+
+<title>project1</title>
+</head>
+<body>
+<div class="fluid-container">
+<h1>Welcome</h1> 
+
+</div> 
+  
+  <form name="floginForm" onsubmit="sendLogin(event.preventDefault())">
+     
+     <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
+    </div>
+   
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="password">
+    </div>
+    
+    <div class="form-group form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember"> Remember me
+      </label>
+    </div>
+   <div>
+    <button  type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </form>
+    </body>
+    <script>
+function sendLogin(){
+	console.log("sendFlogin started.");
+	let floginForm = document.floginForm;
+	let email = floginForm.email.value;
+	let password = floginForm.password.value;
+	
+	let loginTemplate = {
+			email: email,
+			password: password,
+			
+	};
+	
+	console.log(loginTemplate);
+	
+	let xhr = new XMLHttpRequest();
+
+	xhr.onreadystatechange = function() {
+		if(this.readyState === 4 && this.status === 200) {
+			sessionStorage.setItem('currentUser', this.responseText);
+			console.log(this.responseText);
+			console.log(sessionStorage.getItem('currentUser'));
+			window.location = "http://localhost:8080/project-1/Fmanager/home.html";
+		}
+		
+		if(this.readyState === 4 && this.status === 204) {
+			alert("Failed to login! email or password is incorrect.");
+		}
+	};
+
+	xhr.open("POST", "http://localhost:8080/project-1/FMlogin");
+
+	xhr.send(JSON.stringify(loginTemplate));
+	
+	
+}
+
+</script>
+</html>

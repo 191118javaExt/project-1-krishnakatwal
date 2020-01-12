@@ -8,13 +8,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
+import com.revature.models.ReimbursementDTO;
 import com.revature.models.SubmitTemp;
 import com.revature.repositories.ReimbursementDAOImpl;
+import com.revature.services.ReimbursementService;
 
 public class SubmitReimbursementServlet extends HttpServlet {
 
@@ -26,7 +29,7 @@ public class SubmitReimbursementServlet extends HttpServlet {
 			throws ServletException, IOException {
 		BufferedReader reader = req.getReader();
 		
-		PrintWriter out = resp.getWriter();
+//		printwriter here
 		StringBuilder s = new StringBuilder();
 		String line = reader.readLine();
 		while(line != null) {
@@ -68,20 +71,28 @@ public class SubmitReimbursementServlet extends HttpServlet {
 	    
 	   // Reimbursement(double amount, int resolver, String description, int author, int status_id, int type_id)
 		Reimbursement reim = new Reimbursement(amount,9,description,author_id,3,type_id);
-		logger.info("user attement to login with author_id" + author_id);
+		logger.info("user attement to with author_id" + author_id);
 		ReimbursementDAOImpl rd = new ReimbursementDAOImpl();
 		boolean check = rd.add(reim);
 		
-		if(check) {
+		if(reim != null) {
+			HttpSession session = req.getSession();
+			session.setAttribute("author_id", author_id);
+			
+			PrintWriter out = resp.getWriter();
 			logger.info("Reimbursement created");
+			
 			resp.setContentType("application/json");
+			ReimbursementDTO  rdto = ReimbursementService.convertToDTO(reim);
+			out.println(om.writeValueAsString(rdto));
 			resp.setStatus(200);
-			out.print("{\"id\":\"1\"}");
+			
 		} else {
 			resp.setContentType("application/json");
-			resp.setStatus(204);
+			resp.setStatus(400);
 			
 		}
+		
 		
     }
 }

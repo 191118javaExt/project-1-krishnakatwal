@@ -1,42 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FinanceManager Home Page</title>
-    <script src="../scripts/fm.js"></script>
-    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    </head>
-<body>
- <div class="jumbotron">
-    	<h2 id="welcome">Welcome</h2>
-    </div>
-    
- <div class=.container-fluid>
- <form>
-<button type="button" class="btn btn-primary btn-lg btn-block">Approve/Deny Reimbursement</button>
-</form>
-
-<form>
-<button type="button" class="btn btn-secondary btn-lg btn-block">View All Reimbursements</button>
-</form>
-</div>
-</body>
-
-<script>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+   <script>
   	function logout() {
   		let xhr = new XMLHttpRequest();
+
   		xhr.open("POST", "http://localhost:8080/project-1/logout");
   		xhr.send();
   		
   		sessionStorage.removeItem('currentUser');
-		window.location = "http://localhost:8080/project-1/Fmanager/home.html";
+		window.location = "http://localhost:8080/project-1/login.html";
   	}
-  </script>
-  <script>
-  approved and denied and view all reimbursement..
-  </script>
+	</script>
+	
+  </head>
+<body>
+
+<button onclick="handleClick(event.preventDefault())">See all the  Reimbursements</button>
+ <div class="container">
   
+  <div class="table">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+        <th>ID</th>
+          <th>AMOUNT</th>
+           <th>DESCRIPTION</th>
+           <th>STATUS</th>
+           <th>TYPE</th>
+            <th>APPROVED</th>
+             <th>DENIED</th>
+           
+          </tr>
+      </thead>
+      <tbody id ="viewReimbBody">
+      
+      </tbody>
+       </table>
+  </div>
+   <button class="btn btn-success" onclick="logout()">LOGOUT</button>
+</div>
+</body>
+<script>
+function handleClick() {
+	let xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function() {
+		if(this.readyState === 4 && this.status === 200) {
+			sessionStorage.setItem('ReimList', this.responseText);
+			
+		
+			window.location = "http://localhost:8080/project-1/Fmanager/home.html";
+		}
+		
+		if(this.readyState === 4 && this.status === 204) {
+			alert("Failed to login! email or password is incorrect.");
+		}
+	};
+
+	xhr.open("GET", "http://localhost:8080/project-1/Reimbursement");
+
+	xhr.send();
+	}
+
+
+let viewReimbBody = document.getElementById('viewReimbBody');
+ var reimb_list = JSON.parse(sessionStorage.getItem('ReimList'));
+		for(reimb in reimb_list){
+		var tr  = document.createElement('tr');
+			tr.innerHTML = '<td>' + reimb_list[reimb].id + '</td>' +
+			'<td>' + reimb_list[reimb].amount + '</td>' +
+			 '<td>' + reimb_list[reimb].description + '</td>' +
+			 '<td>' + reimb_list[reimb].status_id + '</td>' +
+			 '<td>' + reimb_list[reimb].type_id + '</td>' +
+			 '<td>' + '<button class="btn btn-success" onclick="handleApprove()">Approve</button>' + '</td>' +
+			 '<td>' + '<button class="btn btn-success" onclick="handleDeny()">Deny</button>' + '</td>' +
+			  viewReimbBody.appendChild(tr);
+		};
+</script>
 </html>
+  
+	  
+ 

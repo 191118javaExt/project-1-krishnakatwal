@@ -3,6 +3,7 @@ package com.revature.models;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.TreeMap;
 
 public class Reimbursement implements Serializable {
 
@@ -190,5 +191,7 @@ public class Reimbursement implements Serializable {
 				+ description + ", receipt=" + Arrays.toString(receipt) + ", author=" + author + ", resolved="
 				+ resolved + ", status_id=" + status_id + ", type_id=" + type_id + "]";
 	}
+
+	
 
 }
