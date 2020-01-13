@@ -59,6 +59,14 @@ public class Reimbursement implements Serializable {
 		this.type_id = type_id;
 	}
 
+	
+	
+	public Reimbursement(int id, int status_id) {
+		super();
+		this.id = id;
+		this.status_id = status_id;
+	}
+
 	public int getId() {
 		return id;
 	}

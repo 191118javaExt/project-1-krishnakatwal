@@ -100,7 +100,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 try (Connection conn = ConnectionUtil.getConnection()) {
 			
 			
-			String sql = "UPDATE project1.reimbursements SET status_id = ? WHERE id = ?;"; 
+			String sql = "UPDATE project1.reimbursement SET status_id = ? WHERE id = ?;"; 
 					
 			
 			PreparedStatement stm = conn.prepareStatement(sql);

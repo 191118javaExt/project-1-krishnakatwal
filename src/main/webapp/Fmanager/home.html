@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
-   <script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
   	function logout() {
   		let xhr = new XMLHttpRequest();
 
@@ -17,73 +18,120 @@
 		window.location = "http://localhost:8080/project-1/login.html";
   	}
 	</script>
-	
-  </head>
+
+</head>
 <body>
 
-<button onclick="handleClick(event.preventDefault())">See all the  Reimbursements</button>
- <div class="container">
-  
-  <div class="table">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-        <th>ID</th>
-          <th>AMOUNT</th>
-           <th>DESCRIPTION</th>
-           <th>STATUS</th>
-           <th>TYPE</th>
-            <th>APPROVED</th>
-             <th>DENIED</th>
-           
-          </tr>
-      </thead>
-      <tbody id ="viewReimbBody">
-      
-      </tbody>
-       </table>
-  </div>
-   <button class="btn btn-success" onclick="logout()">LOGOUT</button>
-</div>
+	<button onclick="handleClick(event.preventDefault())">See all the Reimbursements</button>
+	<div class="container">
+
+		<div class="table">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>AMOUNT</th>
+						<th>DESCRIPTION</th>
+						<th>STATUS</th>
+						<th>TYPE</th>
+						<th>APPROVED</th>
+						<th>DENIED</th>
+
+					</tr>
+				</thead>
+				<tbody id="viewReimbBody">
+
+				</tbody>
+			</table>
+		</div>
+		<button class="btn btn-success" onclick="logout()">LOGOUT</button>
+	</div>
+
 </body>
 <script>
 function handleClick() {
-	let xhr = new XMLHttpRequest();
+
+		let xhr = new XMLHttpRequest();
 	
-	xhr.onreadystatechange = function() {
-		if(this.readyState === 4 && this.status === 200) {
+		xhr.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status === 200) {
 			sessionStorage.setItem('ReimList', this.responseText);
 			
 		
 			window.location = "http://localhost:8080/project-1/Fmanager/home.html";
-		}
+			}
 		
-		if(this.readyState === 4 && this.status === 204) {
+			if(this.readyState === 4 && this.status === 204) {
 			alert("Failed to login! email or password is incorrect.");
-		}
-	};
+			}
+		};
 
-	xhr.open("GET", "http://localhost:8080/project-1/Reimbursement");
+		xhr.open("GET", "http://localhost:8080/project-1/Reimbursement");
 
-	xhr.send();
+		xhr.send();
 	}
 
-
-let viewReimbBody = document.getElementById('viewReimbBody');
- var reimb_list = JSON.parse(sessionStorage.getItem('ReimList'));
+</script>
+<script>
+			let viewReimbBody = document.getElementById('viewReimbBody');
+			 var reimb_list = JSON.parse(sessionStorage.getItem('ReimList'));
 		for(reimb in reimb_list){
-		var tr  = document.createElement('tr');
+			var id = reimb_list[reimb].id
+			var tr  = document.createElement('tr');
 			tr.innerHTML = '<td>' + reimb_list[reimb].id + '</td>' +
 			'<td>' + reimb_list[reimb].amount + '</td>' +
 			 '<td>' + reimb_list[reimb].description + '</td>' +
 			 '<td>' + reimb_list[reimb].status_id + '</td>' +
 			 '<td>' + reimb_list[reimb].type_id + '</td>' +
-			 '<td>' + '<button class="btn btn-success" onclick="handleApprove()">Approve</button>' + '</td>' +
-			 '<td>' + '<button class="btn btn-success" onclick="handleDeny()">Deny</button>' + '</td>' +
+			 `<td><button class="btn btn-success" onclick=handleApprove(${id})>Approve</button></td>` +
+			 `<td><button class="btn btn-success" onclick=handleDeny(${id})>Deny</button></td>` 
 			  viewReimbBody.appendChild(tr);
-		};
-</script>
+		}
+		
+		function handleApprove(id){
+			let obj ={
+					id: id,
+					status_id: 1,
+				};
+			let xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if(this.readyState === 4 && this.status === 200) {
+			     console.log(this.responseText);
+			     window.location = "http://localhost:8080/project-1/Fmanager/home.html";
+				}
+				
+			};
+			xhr.open("POST", "http://localhost:8080/project-1/Update");
+
+			xhr.send(JSON.stringify(obj));
+		}
+		
+		
+		</script>	
+		
+		<script>
+		function handleDeny(id){
+			let obj1 ={
+					id: id,
+					status_id: 2,
+				};
+			let xhr = new XMLHttpRequest();
+			
+				xhr.onreadystatechange = function() {
+					if(this.readyState === 4 && this.status === 200) {
+				     console.log(this.responseText);
+				     window.location = "http://localhost:8080/project-1/Fmanager/home.html";
+					}
+					
+				};
+				xhr.open("POST", "http://localhost:8080/project-1/Update");
+
+				xhr.send(JSON.stringify(obj1));
+			}
+		
+			
+	</script>
 </html>
-  
-	  
- 
+
+
+

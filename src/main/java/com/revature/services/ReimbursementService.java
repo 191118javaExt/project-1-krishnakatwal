@@ -20,7 +20,7 @@ public class ReimbursementService {
 
 	}
 
-	public boolean update(Reimbursement r) {
+	public static boolean update(Reimbursement r) {
 		return new ReimbursementDAOImpl().update(r);
 	}
 
@@ -29,9 +29,7 @@ public class ReimbursementService {
 
 	}
 
-	public boolean updater(Reimbursement r) {
-		return new ReimbursementDAOImpl().update(r);
-	}
+	
 
 	public static ReimbursementDTO convertToDTO(Reimbursement r) {
 		
@@ -47,8 +45,7 @@ public class ReimbursementService {
 			
 				);
 	}
-
-	public static List<Reimbursement> getAllReimByUserid(int id) {
+       public static List<Reimbursement> getAllReimByUserid(int id) {
 		return new ReimbursementDAOImpl().getAllReimByUserid(id);
 	}
 
